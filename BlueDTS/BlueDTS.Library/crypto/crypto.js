@@ -29,7 +29,7 @@ class CryptoLib {
         }
         catch (err) {
             console.log(err);
-            throw new Error('error encrypting to hash');
+            throw new Error(err);
         }
 
         return result;
@@ -43,7 +43,7 @@ class CryptoLib {
         }
         catch (err) {
             console.log(err);
-            throw new Error('error decrypting to text');
+            throw new Error(err);
         }
         if (!result) result = message;
         return result;

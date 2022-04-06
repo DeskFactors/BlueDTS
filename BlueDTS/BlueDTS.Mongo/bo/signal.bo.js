@@ -46,7 +46,7 @@ class SignalBO {
 
     async decryptMessage(cipherText, ownerPrekey, selfPrekey ) {
         try {
-
+           
             this.initializeMethod(ownerPrekey, selfPrekey);
 
             var bufferctext64 = this.base64ToArrayBuffer(cipherText);
@@ -65,14 +65,14 @@ class SignalBO {
            
             // level 1 decoding
             var plaintext = Buffer.from(plaintextbuffer, "base64").toString("utf8");
-            //level 2 decoding
+            // level 2 decoding
             plaintext = Buffer.from(plaintext, "base64").toString("utf8");
 
             return { "status": true, result: plaintext};
             
         } catch (error) {
             console.log(error);
-            throw new Error('error decrypting ciphertext to plaintext using signal');
+            throw new Error(error);
         }
     }
 

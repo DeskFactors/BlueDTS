@@ -134,7 +134,7 @@ class MessageModelBuilder {
         }
         catch (err) {
             console.log(err);
-            throw new Error('error parsing ejabberd row to message model');
+            throw new Error(err);
         }
     }
 
