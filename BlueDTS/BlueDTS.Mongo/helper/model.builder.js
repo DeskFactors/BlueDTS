@@ -32,7 +32,7 @@ class MessageModelBuilder {
                 //one-to-one model processing
                 if (msgModel.chatType !== null && msgModel.chatType === 'chat') {
 
-                    msgModel.senderXmppId = content.getFrom();
+                    //msgModel.senderXmppId = content.getFrom();
 
                 }// group chat processing
                 else if (msgModel.chatType !== null && msgModel.chatType === 'groupchat') {
@@ -45,7 +45,7 @@ class MessageModelBuilder {
                 //setting sender
                 {
                     msgModel.sender.deletedFlag = false;
-                    msgModel.sender.forwardAllowedFlag = 0;
+                    msgModel.sender.forwardAllowedFlag = false;
                     msgModel.sender.senderId = content.getFrom();
                     msgModel.sender.senderMsgStatus = 0;
                     msgModel.sender.sentDateTime = 0;
@@ -56,8 +56,9 @@ class MessageModelBuilder {
                 {
                     reciever.deletedFlag = false;
                     reciever.deliveredDateTime = 0;
-                    reciever.receiverId = content.getFrom();
+                    reciever.receiverId = content.getTo();
                     reciever.receiverMsgStatus = 0;
+                    reciever.seenDateTime = 0;
                     reciever.tags = [];
                     msgModel.reciever.push(reciever);
                 }
@@ -70,6 +71,7 @@ class MessageModelBuilder {
 
                         if (subject.messageFormat === "text" || subject.messageFormat === "url") {
                             msgModel.messageText = content.getBody();
+                            msgModel.attachmentSize = 0;
                         }
                         else if (subject.messageFormat === "image" || subject.messageFormat === "video" || subject.messageFormat === "audio"
                             || subject.messageFormat === "doc" || subject.messageFormat === "excel" || subject.messageFormat === "ppt"
@@ -88,7 +90,8 @@ class MessageModelBuilder {
                         else if (subject.messageFormat === "contact") {
 
                             msgModel.attachmentSize = subject.attachmentSize;
-                            msgModel.sender.forwardAllowedFlag = false;
+                            msgModel.contacts = [];
+                           
                             for (const con of subject.contacts) {
 
                                 var contact = new MsgModel.Contacts();
@@ -101,19 +104,18 @@ class MessageModelBuilder {
                         else if (subject.messageFormat === "location") {
                             msgModel.locationString = subject.location;
                             msgModel.messageText = subject.location;
-                            msgModel.sender.forwardAllowedFlag = false;
                         }
 
-
+                        //generic settings
                         msgModel.messageType = subject.messageFormat;
-                        msgModel.dateTime = subject.messageDateTime;
+                        msgModel.datetime = subject.messageDateTime;
                         msgModel.linkedMessageId = subject.linkedMessageId;
                         msgModel.messageHolderId = subject.messageHolderId;
 
-                        if (subject.messageFormat === "forward") {
+                        if (subject.messagetype === "FW") {
                             msgModel.linkType = 'FW';
                         }
-                        else if (subject.messageFormat === "reply") {
+                        else if (subject.messagetype === "RP") {
                             msgModel.linkType = 'RP';
                         }
                         else
@@ -162,6 +164,17 @@ class MessageModelBuilder {
 
         appParser.parseString(xml);
         xmlcontent.setSubject(appParser.parseSubject());
+
+        return xmlcontent;
+    }
+
+    createMessageHostsTag(xml) {
+        var xmlcontent = new XMLContent();
+        var appParser = new XMLParser();
+        appParser.parseString(xml);
+
+        xmlcontent.setTo(appParser.parseTo());
+        xmlcontent.setFrom(appParser.parseFrom());
 
         return xmlcontent;
     }

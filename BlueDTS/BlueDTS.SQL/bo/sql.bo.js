@@ -41,7 +41,12 @@ class SqlBo {
         if (servEnv.restrictedBarepeers.length > 0 && servEnv.restrictedBarepeers.some(z => z === newRow.bare_peer))
             return false;
 
+        //subject validations
         if (!this.validateSubject(newRow.xml))
+            return false;
+
+        //message origination validation to avoid duplication
+        if (!this.validateMessageSource(newRow.username, newRow.peer, newRow.xml))
             return false;
 
         return true;
@@ -49,25 +54,40 @@ class SqlBo {
 
     validateSubject(xml) {
 
-        var modelbuilder = new ModelBuilder();
-        var xmlsubjectcontent = modelbuilder.createSubjectTag(xml);
-
-        var subject = xmlsubjectcontent.getSubject();
-
-        if (subject === null || subject === undefined || subject === '')
-            return false;
-
-        //ignore automated welcome messages
-        if (subject._.includes("Welcome!"))
-            return false;
-
         try {
-            var parsedsubject = JSON.parse(subject.getSubject());
+            var modelbuilder = new ModelBuilder();
+            var xmlsubjectcontent = modelbuilder.createSubjectTag(xml);
+
+            var subject = xmlsubjectcontent.getSubject();
+
+            if (subject === null || subject === undefined || subject === '')
+                return false;
+
+            //ignore automated welcome messages
+            if (subject.hasOwnProperty('_') && subject._.includes("Welcome!"))
+                return false;
+
         }
         catch (e) {
             return false
         }
         return true;
+    }
+
+    validateMessageSource(username, peer, xml) {
+        try {
+            var modelbuilder = new ModelBuilder();
+            var xmlHostsTag = modelbuilder.createMessageHostsTag(xml);
+
+            var toId = xmlHostsTag.getTo();
+            var fromId = xmlHostsTag.getFrom();
+
+            var validation = toId.includes(username) ? peer.includes(fromId) ? true : false : false;
+            return validation;
+        }
+        catch (e) {
+            return false
+        }
     }
 }
 module.exports = SqlBo;

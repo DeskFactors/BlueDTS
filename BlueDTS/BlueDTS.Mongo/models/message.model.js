@@ -14,11 +14,10 @@
 
 class Message {
 
-    receivers = [];
     attachmentSize = null;
     chatType = null;
     subscriberId = null;
-    dateTime = null;
+    datetime = null;
     linkType = null;
     linkedMessageId = null;
     messageAction = null;
@@ -29,18 +28,18 @@ class Message {
     orgnizationId = null;
     overallMsgStatus = null;
     receiverXmppId = null;
-    senderXmppId = null;
-    xmppGroupId = null;
-    locationString = null;
+    //senderXmppId = null;
+    //xmppGroupId = null;
+    //locationString = null;
     userAgent = null;
     xmppChatId = null;
     xmppMessageId = null;
     size = null;
     messageId = null;
     sender = new Sender();
-    attachment = new Attachment();
+    //attachment = new Attachment();
     reciever = [];
-    contacts = [];
+    //contacts = [];
 
     constructor() {
     }
@@ -55,7 +54,7 @@ class Message {
     }
 
     set setDateTime(datetime) {
-        this.dateTime = datetime;
+        this.datetime = datetime;
     }
 
     set setLinkType(linktype) {
@@ -158,7 +157,7 @@ class Message {
     }
 
     get getDateTime() {
-        return this.dateTime;
+        return this.datetime;
     }
 
     get getLinkType() {
@@ -232,13 +231,9 @@ class Message {
     get getSize() {
         return this.size ;
     }
+
     get getlocationString() {
         return this.locationString;
-    }
-
-
-    get getRecievers() {
-        return this.receivers;
     }
 
     get getContacts() {
@@ -320,6 +315,7 @@ class Reciever {
     deliveredDateTime = null;
     receiverId = null;
     receiverMsgStatus = null;
+    seenDateTime = null;
     tags = null;
 
     constructor() {
@@ -341,6 +337,10 @@ class Reciever {
 
     set setReceiverMsgStatus(receiverMsgStatus) {
         this.receiverMsgStatus = receiverMsgStatus;
+    }
+
+    set setSeenDateTime(seenDateTime) {
+        this.seenDateTime = seenDateTime;
     }
 
     set setTags(tags) {

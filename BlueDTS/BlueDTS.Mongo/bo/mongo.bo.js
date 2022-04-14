@@ -236,7 +236,7 @@ class MongoBO {
 
                             //cryptographic activities
                             body = body.replace(/\s/g, '');
-                            body = await this.decryptMessageBody(txtmodelObj.subscriberId, body, txtmodelObj.receiverXmppId, txtmodelObj.senderXmppId);
+                            body = await this.decryptMessageBody(txtmodelObj.subscriberId, body, txtmodelObj.receiverXmppId, txtmodelObj.sender.senderId);
                             body = await this.encryptMessageBody(txtmodelObj.subscriberId, body);
 
                             txtmodelObj.messageText = body;
