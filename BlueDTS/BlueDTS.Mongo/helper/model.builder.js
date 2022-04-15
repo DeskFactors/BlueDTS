@@ -10,6 +10,7 @@
 var XMLContent = require('../models/xmlcontent.model');
 const XMLParser = require('../helper/xml.parser');
 var MsgModel = require('../models/message.model');
+var AtchModel = require('../models/attachment.model');
 
 class MessageModelBuilder {
     constructor() {
@@ -22,6 +23,7 @@ class MessageModelBuilder {
             var result = this.createXMLContent(data.xml);
             var msgModel = new MsgModel.Message();
             var reciever = new MsgModel.Reciever();
+            var attachmentModel = new AtchModel();
 
             if (result.success) {
                 var content = result.content;
@@ -75,17 +77,17 @@ class MessageModelBuilder {
                         }
                         else if (subject.messageFormat === "image" || subject.messageFormat === "video" || subject.messageFormat === "audio"
                             || subject.messageFormat === "doc" || subject.messageFormat === "excel" || subject.messageFormat === "ppt"
-                            || subject.messageFormat === "pdf" || subject.messageFormat === "video" || subject.messageFormat === "recorded-audio") {
+                            || subject.messageFormat === "pdf" || subject.messageFormat === "recorded-audio") {
 
+                            msgModel.attachment = attachmentModel;
                             msgModel.attachment.caption = subject.caption;
                             msgModel.attachment.fileName = subject.fileName;
                             msgModel.attachment.fileType = subject.fileType;
-                            msgModel.attachment.storageRefId = subject.storageRefId;
-                            msgModel.attachment.storageBlobURL = subject.storageBlobURL;
+                            msgModel.attachment.storageRefId = "";
+                            msgModel.attachment.storageBlobURL = "";
                             msgModel.attachment.thumbnailUrl = subject.thumbnailUrl;
                             msgModel.attachmentSize = subject.attachmentSize;
-                            msgModel.sender.forwardAllowedFlag = false;
-                            msgModel.messageText = subject.storageRefId;
+                            msgModel.messageText = content.getBody();
                         }
                         else if (subject.messageFormat === "contact") {
 
@@ -109,7 +111,7 @@ class MessageModelBuilder {
                         //generic settings
                         msgModel.messageType = subject.messageFormat;
                         msgModel.datetime = subject.messageDateTime;
-                        msgModel.linkedMessageId = subject.linkedMessageId;
+                        msgModel.linkedMessageId = (subject.linkedMessageId === null && subject.linkedMessageId === undefined) ? "" : subject.linkedMessageId;
                         msgModel.messageHolderId = subject.messageHolderId;
 
                         if (subject.messagetype === "FW") {

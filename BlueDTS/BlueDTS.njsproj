@@ -64,6 +64,9 @@
     <Content Include="BlueDTS.Mongo\helper\iterator.js" />
     <Content Include="BlueDTS.Mongo\helper\model.builder.js" />
     <Content Include="BlueDTS.Mongo\helper\xml.parser.js" />
+    <Content Include="BlueDTS.Mongo\models\attachment.model.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="BlueDTS.Mongo\models\log.model.js">
       <SubType>Code</SubType>
     </Content>

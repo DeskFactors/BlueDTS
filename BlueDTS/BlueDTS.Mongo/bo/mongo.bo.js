@@ -231,7 +231,7 @@ class MongoBO {
 
                     //body extraction and processing
                     var body = txtmodelObj.messageText;
-                    if (txtmodelObj.messageType === "text" || txtmodelObj.messageType === "url") {
+                    if (txtmodelObj.messageType !== 'contact' || txtmodelObj.messageType !=='location') {
                         if (body != null || body !== undefined || body !== "") {
 
                             //cryptographic activities
@@ -240,6 +240,12 @@ class MongoBO {
                             body = await this.encryptMessageBody(txtmodelObj.subscriberId, body);
 
                             txtmodelObj.messageText = body;
+
+                            //extra settings for model types having attachments included
+                            if (txtmodelObj.attachment !== null && txtmodelObj.attachment !== undefined) {
+                                txtmodelObj.attachment.storageRefId = body;
+                                txtmodelObj.attachment.storageBlobURL = body;
+                            }
                         }
                     }
 
