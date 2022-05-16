@@ -10,18 +10,33 @@
     Reason      : NA
 ***************************************************************************************************************** */
 const AppDefaultDB = [{
+    //"subscriberId": "default",
+    //"db_option": "mongo",
+    //"schema_less": true,
+    //"primary_db": true,
+    //"service_type": "server",
+    //"db_name": "BlueSecuresDB_US",
+    //"db_config": {
+    //    "server": "pocejcall.bluesecures.com",
+    //    "port": "27017",
+    //    "pool_size": "4",
+    //    "user": "Dev",
+    //    "password": "BlueDF1234"
+    //},
+    //"region": "US"
+
     "subscriberId": "default",
     "db_option": "mongo",
     "schema_less": true,
     "primary_db": true,
     "service_type": "server",
-    "db_name": "BlueSecuresDB_US",
+    "db_name": "BlueDTS",
     "db_config": {
-        "server": "pocejcall.bluesecures.com",
+        "server": "localhost",
         "port": "27017",
         "pool_size": "4",
-        "user": "Dev",
-        "password": "BlueDF1234"
+        "user": "",
+        "password": ""
     },
     "region": "US"
 },{
@@ -41,19 +56,35 @@ const AppDefaultDB = [{
     "region": "CA"
     },
 
+    //{
+    //    "subscriberId": "default",
+    //    "db_option": "sql",
+    //    "schema_less": false,
+    //    "primary_db": true,
+    //    "service_type": "server",
+    //    "db_name": "ejabberd",
+    //    "db_config": {
+    //        "server": "pocejcall.bluesecures.com",
+    //        "port": "3306",
+    //        "pool_size": "1",
+    //        "user": "deskfactoradmin",
+    //        "password": "Deskf@ctor?123"
+    //    },
+    //    "region": "US"
+    //},
     {
         "subscriberId": "default",
         "db_option": "sql",
         "schema_less": false,
         "primary_db": true,
         "service_type": "server",
-        "db_name": "ejabberd",
+        "db_name": "dts",
         "db_config": {
-            "server": "pocejcall.bluesecures.com",
+            "server": "localhost",
             "port": "3306",
             "pool_size": "1",
-            "user": "deskfactoradmin",
-            "password": "Deskf@ctor?123"
+            "user": "root",
+            "password": "password"
         },
         "region": "US"
     }]

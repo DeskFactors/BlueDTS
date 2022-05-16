@@ -226,34 +226,25 @@ class MongoBO {
                 let msgbuilder = new MessageModelBuilder();
                 try {
 
-                    // complete rowobj formation based on different message type
-                    let txtmodelObj = await msgbuilder.createMessageModel(row);
+                    var subscriberId = "default";
+                    var toId = "0b25c910-b674-11ec-8c9c-5d1ed5a3662c@conference.dev.bluesecures.com";
+                    var fromId = "918070809020@dev.bluesecures.com";
 
-                    //body extraction and processing
-                    var body = txtmodelObj.messageText;
-                    if (txtmodelObj.messageType !== 'contact' || txtmodelObj.messageType !=='location') {
-                        if (body != null || body !== undefined || body !== "") {
 
-                            //cryptographic activities
-                            body = body.replace(/\s/g, '');
-                            body = await this.decryptMessageBody(txtmodelObj.subscriberId, body, txtmodelObj.receiverXmppId, txtmodelObj.sender.senderId);
-                            body = await this.encryptMessageBody(txtmodelObj.subscriberId, body);
+                    //cryptographic activities
+                    var message = row.message.replace(/\s/g, '');
+                    message = await this.decryptMessageBody('624bcff454609bc7dcbfd6f2', message, toId, fromId);
+                    //body = await this.encryptMessageBody(txtmodelObj.subscriberId, body);
 
-                            txtmodelObj.messageText = body;
+                    row.message = message;
 
-                            //extra settings for model types having attachments included
-                            if (txtmodelObj.attachment !== null && txtmodelObj.attachment !== undefined) {
-                                txtmodelObj.attachment.storageRefId = body;
-                                txtmodelObj.attachment.storageBlobURL = body;
-                            }
-                        }
-                    }
-
-                    const size = new TextEncoder().encode(JSON.stringify(txtmodelObj)).length;
-                    txtmodelObj.size = size;
+                    //extra settings for model types having attachments included
+                    
+                    const size = new TextEncoder().encode(JSON.stringify(row)).length;
+                    row.size = size;
 
                     // here we save the finally processed row to mongo collection.
-                    await this.saveArchivalRow(txtmodelObj.subscriberId, txtmodelObj);
+                    await this.saveArchivalRow(row.subscriberId, row);
                     row.retryCount = 0;
                 }
                 catch (err) {

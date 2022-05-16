@@ -14,22 +14,19 @@
 
 
 const DefaultSQLDB = {
-    host: 'pocejcall.bluesecures.com',
-    user: 'deskfactoradmin',
-    password: 'Deskf@ctor?123',
-    database: 'ejabberd',
-    port: 3306,
-    apptriggertable: 'ejabberd' + '.' + 'archive',
+    //host: 'pocejcall.bluesecures.com',
+    //user: 'deskfactoradmin',
+    //password: 'Deskf@ctor?123',
+    //database: 'ejabberd',
+    //port: 3306,
+    //apptriggertable: 'ejabberd' + '.' + 'archive',
+
+    host: 'localhost',
+    user: 'root',
+    password: 'password',
+    database: 'dts',
+    apptriggertable: 'dts' + '.' + 'archive',
+    port: 3306
 };
-
-
-//const DefaultSQLDB = {
-//    host: 'localhost',
-//    user: 'dev',
-//    password: 'Aviator$1007',
-//    database: 'deskfactors',
-//    apptriggertable: 'deskfactors'+'.'+'testevent',
-//    port: 3306
-//};
 
 module.exports = DefaultSQLDB;

@@ -139,27 +139,27 @@ startapptriggers().then(() => {
 /* ***************************************** END:App Triggers initializtion ***************************************** */
 
 /* ***************************************** BEGIN: To test any bo/dal/dao ***************************************** */
-const ctestBO = require('../BlueDTS.Mongo/bo/mongo.bo');
- //test logic and should be removed before the release
-async function testbo() {
-    var testmodulefunc = new ctestBO();
-    var subscriberId = "default";
-    var toId = "9676b680-a528-11ec-8067-4fd778debfb8@conference.dev.bluesecures.com";
-    var fromId = "918887779994@dev.bluesecures.com";
-    var ciphertext = "AzMIlIDJBhIhBVV5uUVz83nJKVngfR3jhmPjRH90zP2ojczuZKmjcExZGiEFXHiYHeFQoTJdiMkQEcXFK+kNlfzQvxMZhlx4AoWdqXQiQjMKIQWLiiqZKJs0sfrkYbnfiRDAb0bbDsnWT2VQWkeKlxQKChAAGAAiENybPxs4JFRj9vMn8Xl5ZjoKVHXhMmOVbCgAMNyQ4wE=";
-    //var plaintext = await testmodulefunc.decryptMessageBody(subscriberId, ciphertext, toId, fromId);
-    var plaintext = await testmodulefunc.processCacheData(subscriberId);
-    //var ciphertext = await testmodulefunc.encryptMessageBody("61b86caeae050d28a96f640d", "heloooo!!!");
-    //console.log(plaintext);
-};
-testbo().then(() => {
-    console.log('test function executed successfully...\n');
-});
+//const ctestBO = require('../BlueDTS.Mongo/bo/mongo.bo');
+// //test logic and should be removed before the release
+//async function testbo() {
+//    var testmodulefunc = new ctestBO();
+//    var subscriberId = "default";
+//    var toId = "9676b680-a528-11ec-8067-4fd778debfb8@conference.dev.bluesecures.com";
+//    var fromId = "918887779994@dev.bluesecures.com";
+//    var ciphertext = "AzMIlIDJBhIhBVV5uUVz83nJKVngfR3jhmPjRH90zP2ojczuZKmjcExZGiEFXHiYHeFQoTJdiMkQEcXFK+kNlfzQvxMZhlx4AoWdqXQiQjMKIQWLiiqZKJs0sfrkYbnfiRDAb0bbDsnWT2VQWkeKlxQKChAAGAAiENybPxs4JFRj9vMn8Xl5ZjoKVHXhMmOVbCgAMNyQ4wE=";
+//    //var plaintext = await testmodulefunc.decryptMessageBody(subscriberId, ciphertext, toId, fromId);
+//    var plaintext = await testmodulefunc.processCacheData(subscriberId);
+//    //var ciphertext = await testmodulefunc.encryptMessageBody("61b86caeae050d28a96f640d", "heloooo!!!");
+//    //console.log(plaintext);
+//};
+//testbo().then(() => {
+//    console.log('test function executed successfully...\n');
+//});
 /* ***************************************** END:To test any bo/dal/dao ***************************************** */
 
 // start the cron jobs
-//let jobs = new jobs_scheduler();
-//jobs.startJob();
+let jobs = new jobs_scheduler();
+jobs.startJob();
 
 // TEST CASES Access the session as req.session
 app.get('/', function (req, res) {

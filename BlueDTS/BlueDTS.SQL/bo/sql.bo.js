@@ -29,25 +29,25 @@ class SqlBo {
     processRowStatus(newRow) {
         // all buisness logic to decide for the row process status
 
-        if (newRow.txt === "" || newRow.txt === null)
-            return false;
+        //if (newRow.txt === "" || newRow.txt === null)
+        //    return false;
 
-        if (newRow.xml === "" || newRow.xml === null)
-            return false;
+        //if (newRow.xml === "" || newRow.xml === null)
+        //    return false;
 
-        if (servEnv.restrictedUsernames.length > 0 && servEnv.restrictedUsernames.some(z => z === newRow.username))
-            return false;
+        //if (servEnv.restrictedUsernames.length > 0 && servEnv.restrictedUsernames.some(z => z === newRow.username))
+        //    return false;
 
-        if (servEnv.restrictedBarepeers.length > 0 && servEnv.restrictedBarepeers.some(z => z === newRow.bare_peer))
-            return false;
+        //if (servEnv.restrictedBarepeers.length > 0 && servEnv.restrictedBarepeers.some(z => z === newRow.bare_peer))
+        //    return false;
 
-        //subject validations
-        if (!this.validateSubject(newRow.xml))
-            return false;
+        ////subject validations
+        //if (!this.validateSubject(newRow.xml))
+        //    return false;
 
-        //message origination validation to avoid duplication
-        if (!this.validateMessageSource(newRow.username, newRow.peer, newRow.xml))
-            return false;
+        ////message origination validation to avoid duplication
+        //if (!this.validateMessageSource(newRow.username, newRow.peer, newRow.xml))
+        //    return false;
 
         return true;
     }

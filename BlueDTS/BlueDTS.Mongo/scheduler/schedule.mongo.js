@@ -35,10 +35,11 @@ class Scheduler {
 
             if (jobresult)
                 console.log("dts job processed successfully");
-            console.log("dts job processed.");
+            else
+                console.log("dts job processed.");
         }, null, true, servEnv.timeZone);
 
         processdts.start();
-    }    
+    }
 }
 module.exports = Scheduler;
