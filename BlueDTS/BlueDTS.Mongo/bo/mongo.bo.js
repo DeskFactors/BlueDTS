@@ -244,7 +244,7 @@ class MongoBO {
                     row.size = size;
 
                     // here we save the finally processed row to mongo collection.
-                    await this.saveArchivalRow(row.subscriberId, row);
+                    await this.saveArchivalRow(subscriberId, row);
                     row.retryCount = 0;
                 }
                 catch (err) {
